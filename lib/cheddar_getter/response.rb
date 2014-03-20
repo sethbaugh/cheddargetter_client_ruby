@@ -206,7 +206,12 @@ module CheddarGetter
     #code must be provided if this response contains more than one customer.
     def customer_item_quantity_remaining(item_code = nil, code = nil)
       item = customer_item(item_code, code)
-      item ? item[:quantityIncluded] - item[:quantity] : 0
+      if item
+        # if this is an unlimited item, the quantity remaining is the majik number
+        return 99999999.9 if item[:quantityIncluded] == 99999999.9
+      else
+        return item[:quantityIncluded] - item[:quantity]
+      end
     end
     
     #The overage amount for the given item for the given customer.  0 if they are still under their limit.
