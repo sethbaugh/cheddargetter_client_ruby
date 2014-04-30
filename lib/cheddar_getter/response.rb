@@ -209,8 +209,11 @@ module CheddarGetter
       if item
         # if this is an unlimited item, the quantity remaining is the majik number
         return 99999999.9 if item[:quantityIncluded] == 99999999.9
-      else
+
+        # otherwise return difference
         return item[:quantityIncluded] - item[:quantity]
+      else
+        return 0
       end
     end
     
